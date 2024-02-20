@@ -5,6 +5,7 @@ from fingerprints import Fingerprint
 from recognise import RecognizeSong
 from storage import DatabaseManager
 from audio_recorder import record_audio
+from audio_identifier import identify_recorded_music
 
 db = TinyDB('database.json')
 db_manager = DatabaseManager('database.json')
@@ -53,7 +54,14 @@ def main():
             st.write("Aufnahme gestartet...")
             record_audio('output.wav', duration=5)
             st.write("Aufnahme beendet!")
+
+            st.write("Identifiziere Musikstück...")
+            uploaded_file = open('output.wav', 'rb')
+            title = identify_recorded_music(uploaded_file)
+            st.write(title)
+            
         st.subheader("Wähle eine Wav-Datei zum Identifizieren aus")
+
         uploaded_file_identify = st.file_uploader("Wav-Datei hochladen", type=["wav"])
 
         if uploaded_file_identify is not None:
