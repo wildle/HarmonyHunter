@@ -6,7 +6,7 @@ from recognise import RecognizeSong
 from storage import DatabaseManager
 from audio_recorder import record_audio
 from audio_identifier import identify_recorded_music
-from metadata import get_song_metadata
+from album_cover import get_album_cover
 
 db = TinyDB('database.json')
 db_manager = DatabaseManager('database.json')
@@ -61,14 +61,12 @@ def main():
             title = identify_recorded_music(uploaded_file)
             st.write(title)
 
-            artist, album, year = get_song_metadata(title)
-            if artist and album and year:
-                st.write(f"artist: {artist}")
-                st.write(f"Album: {album}")
-                st.write(f"Erscheinungsjahr: {year}")
+            cover_url = get_album_cover(title)
+            if cover_url:
+                st.image(cover_url, caption='Albumcover', use_column_width=True)
             else:
-                st.warning("Metadaten konnten nicht gefunden werden.")
-            
+                st.warning("Albumcover nicht gefunden.")
+
         st.subheader("Wähle eine Wav-Datei zum Identifizieren aus")
 
         uploaded_file_identify = st.file_uploader("Wav-Datei hochladen", type=["wav"])
