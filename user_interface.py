@@ -1,4 +1,5 @@
 import streamlit as st
+import time
 from streamlit_option_menu import option_menu
 from tinydb import TinyDB, Query
 from fingerprints import Fingerprint
@@ -47,8 +48,13 @@ def main():
             artist = "Artist"  
             album = "Album" 
 
+            # Messen der Einlernzeit
+            start_time_learning = time.time()
             db_manager.save_to_database(fingerprint_instance.fingerprint_file(uploaded_file), (artist, album, title))
-            st.success("Musikstück erfolgreich eingelernt.")
+            end_time_learning = time.time()
+            duration_learning = end_time_learning - start_time_learning
+            st.success(f"Musikstück erfolgreich eingelernt. Dauer: {duration_learning:.2f} Sekunden")
+
 
     elif selected == "Musikstück identifizieren":
         if st.button("Aufnahme starten"):
@@ -56,10 +62,15 @@ def main():
             record_audio('output.wav', duration=5)
             st.write("Aufnahme beendet!")
 
+            # Messen der Identifizierungszeit
+            start_time_identification = time.time()
             st.write("Identifiziere Musikstück...")
             uploaded_file = open('output.wav', 'rb')
             title = identify_recorded_music(uploaded_file)
             st.write(title)
+            end_time_identification = time.time()
+            duration_identification = end_time_identification - start_time_identification
+            st.write(f"Identifizierungsdauer: {duration_identification:.2f} Sekunden")
 
             cover_url = get_album_cover(title)
             if cover_url:
