@@ -8,6 +8,7 @@ from storage import DatabaseManager
 from audio_recorder import record_audio
 from audio_identifier import identify_recorded_music
 from album_cover import get_album_cover
+from youtube_link import get_youtube_link
 
 db = TinyDB('database.json')
 db_manager = DatabaseManager('database.json')
@@ -72,11 +73,22 @@ def main():
             duration_identification = end_time_identification - start_time_identification
             st.write(f"Identifizierungsdauer: {duration_identification:.2f} Sekunden")
 
+            
+            # YouTube-Link
+            youtube_link = get_youtube_link(title)
+            if youtube_link:
+                st.write("YouTube-Link:", youtube_link)
+            else:
+                st.warning("YouTube-Link nicht gefunden.")
+
+            #Albumcover ausgeben
             cover_url = get_album_cover(title)
             if cover_url:
                 st.image(cover_url, caption='Albumcover', use_column_width=True)
             else:
                 st.warning("Albumcover nicht gefunden.")
+
+            
 
         st.subheader("Wähle eine Wav-Datei zum Identifizieren aus")
 
