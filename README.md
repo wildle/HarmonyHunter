@@ -49,6 +49,20 @@ The project consists of several Python files:
 - `settings.py`: Contains global settings for the project.
 - `storage.py`: Defines the `DatabaseManager` class for interacting with the TinyDB database.
 - `user_interface.py`: Contains the Streamlit application for the user interface.
+- `fingerprints.py` : Finds peaks, creates hashes and fingerprints. 
+- `recognize.py` : Finds matches.
+- `audio_recorder.py` : Records audio.
+- `audio_identifier.py` : Identifies audio.
+- `album_cover.py` : Finds album covers with Duckduckgo.
+- `youtube_link.py` : Finds Youtube links with Duckduckgo.
+
+## Add-ons
+- Recording via microphone
+- Determine and display the album cover of the music track
+- Benchmarking the application: How long does the teach-in process take? How long does identification take?
+- Link to identified piece of music on YouTube
+- History of the last identified pieces of music????
+
 
 ## Contributing
 
