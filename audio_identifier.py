@@ -26,4 +26,4 @@ def identify_recorded_music(uploaded_file):
         else:
             return "Titel nicht gefunden für Song ID: " + str(song_id)
     else:
-        return "Kein übereinstimmendes Musikstück gefunden."
+        return None

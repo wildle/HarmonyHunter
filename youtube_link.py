@@ -2,7 +2,6 @@ import requests
 from bs4 import BeautifulSoup
 
 def get_youtube_link(title):
-    # Suchbegriffe für das Youtube-Video
     keywords = f"{title} YouTube"
 
     # DuckDuckGo-Suchergebnisseite abrufen
@@ -21,5 +20,5 @@ def get_youtube_link(title):
             if 'youtube.com' in url:
                 return url
 
-    # Wenn keine Ergebnisse gefunden werden, None zurückgeben
+    # Wenn keine Ergebnisse gefunden werden
     return None

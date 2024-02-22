@@ -73,20 +73,23 @@ def main():
             duration_identification = end_time_identification - start_time_identification
             st.write(f"Identifizierungsdauer: {duration_identification:.2f} Sekunden")
 
-            
-            # YouTube-Link
-            youtube_link = get_youtube_link(title)
-            if youtube_link:
-                st.write("YouTube-Link:", youtube_link)
-            else:
-                st.warning("YouTube-Link nicht gefunden.")
+            # Wenn ein Titel identifiziert wurde
+            if title:
+                # YouTube-Link
+                youtube_link = get_youtube_link(title)
+                if youtube_link:
+                    st.write("YouTube-Link:", youtube_link)
+                else:
+                    st.warning("YouTube-Link nicht gefunden.")
 
-            #Albumcover ausgeben
-            cover_url = get_album_cover(title)
-            if cover_url:
-                st.image(cover_url, caption='Albumcover', use_column_width=True)
+                # Albumcover ausgeben
+                cover_url = get_album_cover(title)
+                if cover_url:
+                    st.image(cover_url, caption='Albumcover', use_column_width=True)
+                else:
+                    st.warning("Albumcover nicht gefunden.")
             else:
-                st.warning("Albumcover nicht gefunden.")
+                st.warning("Kein übereinstimmendes Musikstück gefunden.")
 
             
 

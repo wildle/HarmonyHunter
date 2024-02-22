@@ -22,5 +22,5 @@ def get_album_cover(title):
         for result in ddgs_images_gen:
             return result['image']
     
-    # Wenn keine Ergebnisse gefunden werden, None zurückgeben
+    # Wenn keine Ergebnisse gefunden werden
     return None
