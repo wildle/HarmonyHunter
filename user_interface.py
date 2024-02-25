@@ -8,11 +8,13 @@ from storage import DatabaseManager
 from audio_recorder import record_audio
 from audio_identifier import identify_recorded_music
 from album_cover import get_album_cover
+from history_manager import HistoryManager
 
 db = TinyDB('database.json')
 db_manager = DatabaseManager('database.json')
 fingerprint_instance = Fingerprint()
 recognize_instance = RecognizeSong(db_manager)
+history_manager= HistoryManager('database.json')
 
 def identify_music(uploaded_file):
     st.audio(uploaded_file)
@@ -26,15 +28,17 @@ def identify_music(uploaded_file):
         title = db_manager.get_title_from_song_id(song_id)
         if title:
             st.write("Musikstück:", title)
+            history_manager.add_to_history(song_id, title)
         else:
             st.warning("Titel nicht gefunden für Song ID: " + str(song_id))
     else:
         st.warning("Kein übereinstimmendes Musikstück gefunden.")
+    
 
 def main():
     st.title("HarmonyHunter")
 
-    selected = option_menu(None, ["Musikstück einlernen", "Musikstück identifizieren"],
+    selected = option_menu(None, ["Musikstück einlernen", "Musikstück identifizieren", "Historie"],
                            icons=['cloud', "settings"],
                            menu_icon="cast", default_index=0, orientation="horizontal")
 
@@ -84,6 +88,12 @@ def main():
 
         if uploaded_file_identify is not None:
             identify_music(uploaded_file_identify)
+
+    elif selected == "Historie":
+        st.subheader("Historie der erkannten Musikstücke")
+        history = history_manager.get_history()
+        for song in history:
+            st.write(f"Song ID: {song['song_id']}, Titel: {song['title']}")
 
 if __name__ == "__main__":
     main()
