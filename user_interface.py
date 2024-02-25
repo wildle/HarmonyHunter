@@ -23,6 +23,7 @@ def identify_music(uploaded_file):
     matches = recognize_instance.get_matches(sample_fingerprints)
 
     best_match_result = recognize_instance.best_match(matches)
+
     if best_match_result:
         song_id = str(best_match_result)
         title = db_manager.get_title_from_song_id(song_id)
@@ -107,7 +108,7 @@ def main():
         st.subheader("Historie der erkannten Musikstücke")
         history = history_manager.get_history()
         for song in history:
-            st.write(f"Song ID: {song['song_id']}, Titel: {song['title']}")
+            st.write(f"Zeit: {song['time']}, Titel: {song['title']}")
 
 if __name__ == "__main__":
     main()
