@@ -1,13 +1,14 @@
 from tinydb import TinyDB, Query
 from tinydb.database import Table
 from contextlib import contextmanager
+from typing import Generator
 
 class DatabaseManager:
     def __init__(self, db_path):
         self.db = TinyDB(db_path)
 
     @contextmanager
-    def get_cursor(self, table_name='_default') -> Table:
+    def get_cursor(self, table_name='_default') -> Generator[Table, None, None]:
         table = self.db.table(table_name)
         yield table
         # You can perform any cleanup or additional operations after the 'with' block if needed
