@@ -9,6 +9,7 @@ from audio_recorder import record_audio
 from audio_identifier import identify_recorded_music
 from album_cover import get_album_cover
 from youtube_link import get_youtube_link
+from history_manager import HistoryManager
 
 db = TinyDB('database.json')
 db_manager = DatabaseManager('database.json')
