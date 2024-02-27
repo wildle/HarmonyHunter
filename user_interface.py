@@ -137,7 +137,8 @@ def main():
                     st.warning("Albumcover nicht gefunden.")
 
             with col2:
-                st.write(f"Zeit: {song['time']}, Titel: {song['title']}")
+                st.write(f"Titel: {song['title']}")
+                st.write(f"Datum \& Zeit: {song['time']}")
 
             with col3:
                 # YouTube-Link
