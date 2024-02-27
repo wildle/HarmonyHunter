@@ -73,30 +73,34 @@ def main():
             st.write("Identifiziere Musikstück...")
             uploaded_file = open('output.wav', 'rb')
             title = identify_recorded_music(uploaded_file)
-            st.write(title)
             end_time_identification = time.time()
             duration_identification = end_time_identification - start_time_identification
             st.write(f"Identifizierungsdauer: {duration_identification:.2f} Sekunden")
 
             # Wenn ein Titel identifiziert wurde
             if title:
-                # YouTube-Link
-                youtube_link = get_youtube_link(title)
-                if youtube_link:
-                    st.markdown(f"[YouTube-Link]({youtube_link})")
-                else:
-                    st.warning("YouTube-Link nicht gefunden.")
+                col1, col2, col3 = st.columns([1,3,1])
 
-                # Albumcover ausgeben
-                cover_url = get_album_cover(title)
-                if cover_url:
-                    st.image(cover_url, caption='Albumcover', use_column_width=True)
-                else:
-                    st.warning("Albumcover nicht gefunden.")
+                with col1:
+                    # Albumcover ausgeben
+                    cover_url = get_album_cover(title)
+                    if cover_url:
+                        st.image(cover_url, caption='Albumcover', width=100)
+                    else:
+                        st.warning("Albumcover nicht gefunden.")
+
+                with col2:
+                    st.write(title)
+
+                with col3:
+                    # YouTube-Link
+                    youtube_link = get_youtube_link(title)
+                    if youtube_link:
+                        st.markdown(f"[YouTube-Link]({youtube_link})")
+                    else:
+                        st.warning("YouTube-Link nicht gefunden.")
             else:
                 st.warning("Kein übereinstimmendes Musikstück gefunden.")
-
-            
 
         st.subheader("Wähle eine Wav-Datei zum Identifizieren aus")
 
