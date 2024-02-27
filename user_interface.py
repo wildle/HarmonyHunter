@@ -9,6 +9,8 @@ from audio_recorder import record_audio
 from audio_identifier import identify_recorded_music
 from album_cover import get_album_cover
 from youtube_link import get_youtube_link
+from apple_music_link import get_apple_music_link
+from spotify_link import get_spotify_link
 from history_manager import HistoryManager
 
 db = TinyDB('database.json')
@@ -93,12 +95,23 @@ def main():
                     st.write(title)
 
                 with col3:
-                    # YouTube-Link
-                    youtube_link = get_youtube_link(title)
-                    if youtube_link:
-                        st.markdown(f"[YouTube-Link]({youtube_link})")
-                    else:
-                        st.warning("YouTube-Link nicht gefunden.")
+                            # YouTube-Link
+                            youtube_link = get_youtube_link(title)
+                            if youtube_link:
+                                st.markdown(f"[YouTube]({youtube_link})")
+
+                            # Apple Music-Link
+                            apple_music_link = get_apple_music_link(title)
+                            if apple_music_link:
+                                st.markdown(f"[Apple Music]({apple_music_link})")
+
+                            # Spotify-Link
+                            spotify_link = get_spotify_link(title)
+                            if spotify_link:
+                                st.markdown(f"[Spotify]({spotify_link})")
+
+                            if not youtube_link and not spotify_link and not apple_music_link:
+                                st.warning("Keine Links gefunden.")
             else:
                 st.warning("Kein übereinstimmendes Musikstück gefunden.")
 
@@ -131,8 +144,19 @@ def main():
                 youtube_link = get_youtube_link(song['title'])
                 if youtube_link:
                     st.markdown(f"[YouTube-Link]({youtube_link})")
-                else:
-                    st.warning("YouTube-Link nicht gefunden.")
+
+                # Apple Music-Link
+                apple_music_link = get_apple_music_link(song['title'])
+                if apple_music_link:
+                    st.markdown(f"[Apple Music]({apple_music_link})")
+
+                # Spotify-Link
+                spotify_link = get_spotify_link(song['title'])
+                if spotify_link:
+                    st.markdown(f"[Spotify]({spotify_link})")
+
+                if not youtube_link and not spotify_link and not apple_music_link:
+                    st.warning("Keine Links gefunden.")
 
 if __name__ == "__main__":
     main()
