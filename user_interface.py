@@ -83,7 +83,7 @@ def main():
                 # YouTube-Link
                 youtube_link = get_youtube_link(title)
                 if youtube_link:
-                    st.write("YouTube-Link:", youtube_link)
+                    st.markdown(f"[YouTube-Link]({youtube_link})")
                 else:
                     st.warning("YouTube-Link nicht gefunden.")
 
@@ -109,7 +109,26 @@ def main():
         st.subheader("Historie der erkannten Musikstücke")
         history = history_manager.get_history()
         for song in history:
-            st.write(f"Zeit: {song['time']}, Titel: {song['title']}")
+            col1, col2, col3 = st.columns([1,3,1])
+
+            with col1:
+                # Albumcover ausgeben
+                cover_url = get_album_cover(song['title'])
+                if cover_url:
+                    st.image(cover_url, caption='Albumcover', width=100)
+                else:
+                    st.warning("Albumcover nicht gefunden.")
+
+            with col2:
+                st.write(f"Zeit: {song['time']}, Titel: {song['title']}")
+
+            with col3:
+                # YouTube-Link
+                youtube_link = get_youtube_link(song['title'])
+                if youtube_link:
+                    st.markdown(f"[YouTube-Link]({youtube_link})")
+                else:
+                    st.warning("YouTube-Link nicht gefunden.")
 
 if __name__ == "__main__":
     main()
