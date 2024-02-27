@@ -87,7 +87,7 @@ def main():
                     # Albumcover ausgeben
                     cover_url = get_album_cover(title)
                     if cover_url:
-                        st.image(cover_url, caption='Albumcover', width=100)
+                        st.image(cover_url, width=100)
                     else:
                         st.warning("Albumcover nicht gefunden.")
 
@@ -132,7 +132,7 @@ def main():
                 # Albumcover ausgeben
                 cover_url = get_album_cover(song['title'])
                 if cover_url:
-                    st.image(cover_url, caption='Albumcover', width=100)
+                    st.image(cover_url, width=100)
                 else:
                     st.warning("Albumcover nicht gefunden.")
 
