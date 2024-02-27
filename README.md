@@ -44,7 +44,6 @@ In the application, you can choose to either learn a new music piece or identify
 
 The project consists of several Python files:
 
-<<<<<<< HEAD
 - `settings.py`: Contains global settings for the project.
 - `storage.py`: Defines the `DatabaseManager` class for interacting with the TinyDB database.
 - `user_interface.py`: Contains the Streamlit application for the user interface.
@@ -62,15 +61,6 @@ The project consists of several Python files:
 - Link to identified piece of music on YouTube
 - History of the last identified pieces of music????
 
-=======
-- settings.py: Contains global settings for the project.
-- storage.py: Defines the DatabaseManager class for interacting with the TinyDB database.
-- user_interface.py: Contains the Streamlit application for the user interface.
-- audio_recorder.py: Contains the record_audio function for recording audio.
-- audio_identifier.py: Contains the identify_recorded_music function for identifying music from recorded audio.
-- fingerprints.py: Contains the Fingerprint class for generating fingerprints from audio files.
-- recognise.py: Contains the RecognizeSong class for matching audio fingerprints against the database.
->>>>>>> f3a179d (updated README.md)
 
 ## Contributing
 
