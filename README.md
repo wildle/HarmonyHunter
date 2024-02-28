@@ -17,21 +17,9 @@ HarmonyHunter bietet eine Vielzahl von Funktionen für die Musikerkennung:
 
 ## Dependencies
 
-The project depends on several Python libraries including:
+The project depends on several Python libraries. You can install these dependencies using pip:
 
-- numpy
-- scikit-learn
-- matplotlib
-- jupyter
-- PyAudio
-- pydub
-- tinytag
-- streamlit
-- tinydb
-- wave
-
-You can install these dependencies using pip:
-
+```bash
 pip install -r requirements.txt
 
 ## Usage
