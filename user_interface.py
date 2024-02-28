@@ -180,7 +180,7 @@ def main():
                 # YouTube-Link
                 youtube_link = get_youtube_link(song['title'])
                 if youtube_link:
-                    st.markdown(f"[YouTube-Link]({youtube_link})")
+                    st.markdown(f"[YouTube]({youtube_link})")
 
                 # Apple Music-Link
                 apple_music_link = get_apple_music_link(song['title'])
