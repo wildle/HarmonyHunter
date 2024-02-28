@@ -4,10 +4,16 @@ HarmonyHunter is a music recognition system built with Python. It uses audio fin
 
 ## Features
 
-- Audio fingerprinting and storage
-- Music recognition from audio files
-- Interactive user interface
-- Audio recording functionality
+HarmonyHunter bietet eine Vielzahl von Funktionen für die Musikerkennung:
+
+- **Audio-Fingerprinting und Speicherung**: HarmonyHunter kann Audio-Fingerprints aus .wav-Dateien erstellen und diese in einer Datenbank speichern.
+- **Musikererkennung aus Audiodateien**: Durch Vergleich der Audio-Fingerprints kann HarmonyHunter Musikstücke aus .wav-Dateien erkennen.
+- **Interaktive Benutzeroberfläche**: Mit der interaktiven Benutzeroberfläche können Benutzer neue Musikstücke einlernen oder vorhandene Musikstücke identifizieren.
+- **Audioaufnahmefunktion**: Benutzer können Audio direkt über das Mikrofon aufnehmen und HarmonyHunter kann dieses Audio identifizieren.
+- **Albumcover-Erkennung**: HarmonyHunter kann das Albumcover des erkannten Musikstücks ermitteln und anzeigen.
+- **Benchmarking**: Die Anwendung bietet Informationen darüber, wie lange der Einlernprozess und die Identifizierung dauern.
+- **YouTube-Link**: HarmonyHunter kann einen Link zum erkannten Musikstück auf YouTube finden.
+- **Verlauf der zuletzt identifizierten Musikstücke**: Die Anwendung kann einen Verlauf der zuletzt identifizierten Musikstücke anzeigen.
 
 ## Dependencies
 
