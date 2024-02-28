@@ -95,32 +95,68 @@ def main():
                     st.write(title)
 
                 with col3:
-                            # YouTube-Link
-                            youtube_link = get_youtube_link(title)
-                            if youtube_link:
-                                st.markdown(f"[YouTube]({youtube_link})")
+                    # YouTube-Link
+                    youtube_link = get_youtube_link(title)
+                    if youtube_link:
+                        st.markdown(f"[YouTube]({youtube_link})")
 
-                            # Apple Music-Link
-                            apple_music_link = get_apple_music_link(title)
-                            if apple_music_link:
-                                st.markdown(f"[Apple Music]({apple_music_link})")
+                    # Apple Music-Link
+                    apple_music_link = get_apple_music_link(title)
+                    if apple_music_link:
+                        st.markdown(f"[Apple Music]({apple_music_link})")
 
-                            # Spotify-Link
-                            spotify_link = get_spotify_link(title)
-                            if spotify_link:
-                                st.markdown(f"[Spotify]({spotify_link})")
+                    # Spotify-Link
+                    spotify_link = get_spotify_link(title)
+                    if spotify_link:
+                        st.markdown(f"[Spotify]({spotify_link})")
 
-                            if not youtube_link and not spotify_link and not apple_music_link:
-                                st.warning("Keine Links gefunden.")
+                    if not youtube_link and not spotify_link and not apple_music_link:
+                        st.warning("Keine Links gefunden.")
             else:
                 st.warning("Kein übereinstimmendes Musikstück gefunden.")
 
         st.subheader("Wähle eine Wav-Datei zum Identifizieren aus")
 
-        uploaded_file_identify = st.file_uploader("Wav-Datei hochladen", type=["wav"])
+        uploaded_file_identify = st.file_uploader("Wav-Datei hochladen", type=["wav"], key="unique_key")
 
         if uploaded_file_identify is not None:
-            identify_music(uploaded_file_identify)
+            title = identify_music(uploaded_file_identify)
+
+            # Wenn ein Titel identifiziert wurde
+            if title:
+                col1, col2, col3 = st.columns([1,3,1])
+
+                with col1:
+                    # Albumcover ausgeben
+                    cover_url = get_album_cover(title)
+                    if cover_url:
+                        st.image(cover_url, caption='Albumcover', width=100)
+                    else:
+                        st.warning("Albumcover nicht gefunden.")
+
+                with col2:
+                    st.write(title)
+
+                with col3:
+                    # YouTube-Link
+                    youtube_link = get_youtube_link(title)
+                    if youtube_link:
+                        st.markdown(f"[YouTube]({youtube_link})")
+
+                    # Apple Music-Link
+                    apple_music_link = get_apple_music_link(title)
+                    if apple_music_link:
+                        st.markdown(f"[Apple Music]({apple_music_link})")
+
+                    # Spotify-Link
+                    spotify_link = get_spotify_link(title)
+                    if spotify_link:
+                        st.markdown(f"[Spotify]({spotify_link})")
+
+                    if not youtube_link and not spotify_link and not apple_music_link:
+                        st.warning("Keine Links gefunden.")
+            else:
+                st.warning("Kein übereinstimmendes Musikstück gefunden.")
 
     elif selected == "Historie":
         st.subheader("Historie der erkannten Musikstücke")
@@ -138,7 +174,7 @@ def main():
 
             with col2:
                 st.write(f"Titel: {song['title']}")
-                st.write(f"Datum \& Zeit: {song['time']}")
+                st.write(f"Datum \\& Zeit: {song['time']}")
 
             with col3:
                 # YouTube-Link
