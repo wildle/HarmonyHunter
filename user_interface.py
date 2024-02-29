@@ -37,6 +37,8 @@ def identify_music(uploaded_file):
             st.warning("Titel nicht gefunden für Song ID: " + str(song_id))
     else:
         st.warning("Kein übereinstimmendes Musikstück gefunden.")
+
+    return title
     
 
 def main():
@@ -46,6 +48,7 @@ def main():
                            icons=['cloud', "settings"],
                            menu_icon="cast", default_index=0, orientation="horizontal")
     
+    title = None
 
     if selected == "Musikstück einlernen":
         st.subheader("Wähle eine Wav-Datei zum Einlernen aus")
@@ -53,13 +56,12 @@ def main():
 
         if uploaded_file is not None:
             st.audio(uploaded_file, format='audio/*', start_time=0)
-            title = st.text_input("Titel", "")
-            artist = st.text_input("Interpret", "")
-            album = st.text_input("Album", "")
+            info = st.text_input("Titel, Interpret, Album (getrennt durch Kommas)", "")
+            title, artist, album = info.split(",") if info else ("", "", "")
 
             # Messen der Einlernzeit
             start_time_learning = time.time()
-            db_manager.save_to_database(fingerprint_instance.fingerprint_file(uploaded_file), (artist, album, title))
+            db_manager.save_to_database(fingerprint_instance.fingerprint_file(uploaded_file), (title, artist, album))
             end_time_learning = time.time()
             duration_learning = end_time_learning - start_time_learning
             st.success(f"Musikstück erfolgreich eingelernt. Dauer: {duration_learning:.2f} Sekunden")
@@ -71,6 +73,8 @@ def main():
             record_audio('output.wav', duration=5)
             st.write("Aufnahme beendet!")
 
+
+
             # Messen der Identifizierungszeit
             start_time_identification = time.time()
             st.write("Identifiziere Musikstück...")
@@ -80,84 +84,45 @@ def main():
             duration_identification = end_time_identification - start_time_identification
             st.write(f"Identifizierungsdauer: {duration_identification:.2f} Sekunden")
 
-            # Wenn ein Titel identifiziert wurde
-            if title:
-                col1, col2, col3 = st.columns([1,3,1])
+        # Wenn ein Titel identifiziert wurde
+        if title:
+            title, artist, album = title.split(",") if title else ("", "", "")
+            col1, col2, col3 = st.columns([1,3,1])
 
-                with col1:
-                    # Albumcover ausgeben
-                    cover_url = get_album_cover(title)
-                    if cover_url:
-                        st.image(cover_url, width=100)
-                    else:
-                        st.warning("Albumcover nicht gefunden.")
+            with col1:
+                # Albumcover ausgeben
+                cover_url = get_album_cover(title)
+                if cover_url:
+                    st.image(cover_url, width=100)
+                else:
+                    st.warning("Albumcover nicht gefunden.")
 
-                with col2:
-                    st.write(title)
+            with col2:
+                st.write(f"Titel: {title}")
+                st.write(f"Interpret: {artist}")
+                st.write(f"Album: {album}")
 
-                with col3:
-                    # YouTube-Link
-                    youtube_link = get_youtube_link(title)
-                    if youtube_link:
-                        st.markdown(f"[YouTube]({youtube_link})")
+            with col3:
+                # YouTube-Link
+                youtube_link = get_youtube_link(title)
+                if youtube_link:
+                    st.markdown(f"[YouTube]({youtube_link})")
 
-                    # Apple Music-Link
-                    apple_music_link = get_apple_music_link(title)
-                    if apple_music_link:
-                        st.markdown(f"[Apple Music]({apple_music_link})")
+                # Apple Music-Link
+                apple_music_link = get_apple_music_link(title)
+                if apple_music_link:
+                    st.markdown(f"[Apple Music]({apple_music_link})")
 
-                    # Spotify-Link
-                    spotify_link = get_spotify_link(title)
-                    if spotify_link:
-                        st.markdown(f"[Spotify]({spotify_link})")
+                # Spotify-Link
+                spotify_link = get_spotify_link(title)
+                if spotify_link:
+                    st.markdown(f"[Spotify]({spotify_link})")
 
-                    if not youtube_link and not spotify_link and not apple_music_link:
-                        st.warning("Keine Links gefunden.")
-            else:
-                st.warning("Kein übereinstimmendes Musikstück gefunden.")
+                if not youtube_link and not spotify_link and not apple_music_link:
+                    st.warning("Keine Links gefunden.")
+        else:
+            st.warning("Kein übereinstimmendes Musikstück gefunden.")
 
-        st.subheader("Wähle eine Wav-Datei zum Identifizieren aus")
-
-        uploaded_file_identify = st.file_uploader("Wav-Datei hochladen", type=["wav"], key="unique_key")
-
-        if uploaded_file_identify is not None:
-            title = identify_music(uploaded_file_identify)
-
-            # Wenn ein Titel identifiziert wurde
-            if title:
-                col1, col2, col3 = st.columns([1,3,1])
-
-                with col1:
-                    # Albumcover ausgeben
-                    cover_url = get_album_cover(title)
-                    if cover_url:
-                        st.image(cover_url, caption='Albumcover', width=100)
-                    else:
-                        st.warning("Albumcover nicht gefunden.")
-
-                with col2:
-                    st.write(title)
-
-                with col3:
-                    # YouTube-Link
-                    youtube_link = get_youtube_link(title)
-                    if youtube_link:
-                        st.markdown(f"[YouTube]({youtube_link})")
-
-                    # Apple Music-Link
-                    apple_music_link = get_apple_music_link(title)
-                    if apple_music_link:
-                        st.markdown(f"[Apple Music]({apple_music_link})")
-
-                    # Spotify-Link
-                    spotify_link = get_spotify_link(title)
-                    if spotify_link:
-                        st.markdown(f"[Spotify]({spotify_link})")
-
-                    if not youtube_link and not spotify_link and not apple_music_link:
-                        st.warning("Keine Links gefunden.")
-            else:
-                st.warning("Kein übereinstimmendes Musikstück gefunden.")
 
     elif selected == "Historie":
         st.subheader("Historie der erkannten Musikstücke")
