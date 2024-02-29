@@ -45,6 +45,7 @@ def main():
     selected = option_menu(None, ["Musikstück einlernen", "Musikstück identifizieren", "Historie"],
                            icons=['cloud', "settings"],
                            menu_icon="cast", default_index=0, orientation="horizontal")
+    
 
     if selected == "Musikstück einlernen":
         st.subheader("Wähle eine Wav-Datei zum Einlernen aus")
@@ -52,9 +53,9 @@ def main():
 
         if uploaded_file is not None:
             st.audio(uploaded_file, format='audio/*', start_time=0)
-            title = uploaded_file.name
-            artist = "Artist"  
-            album = "Album" 
+            title = st.text_input("Titel", "")
+            artist = st.text_input("Interpret", "")
+            album = st.text_input("Album", "")
 
             # Messen der Einlernzeit
             start_time_learning = time.time()
