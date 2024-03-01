@@ -40,6 +40,27 @@ Um HarmonyHunter lokal auszuführen, führen Sie die folgenden Schritte aus:
 - Links zu verschiedenen Streaming-Anbietern
 - History der erkannten Musikstücke einsehen
 
+## UML-Diagramm
+
+Zum Anzeigen des UML-Diagramms in Visual Studio Code ist die Erweiterung "Markdown Preview Mermaid Support" erforderlich.
+
+```mermaid
+graph TD
+    A[Start] --> B(NotLoggedIn)
+    B --> |Registrierung Button geklickt| C[Registrierung]
+    B --> |Login Button geklickt| D[Login]
+    C --> |Zurück| B
+    D --> |Zurück| B
+    B --> |Weiter| E[Eingeloggt]
+    E --> |Weiter| F[Hauptmenü]
+    F --> |Musikstück einlernen gewählt| G[Musikstück einlernen]
+    F --> |Musikstück identifizieren gewählt| H[Musikstück identifizieren]
+    F --> |Historie gewählt| I[Historie]
+    G --> |Zurück| F
+    H --> |Zurück| F
+    I --> |Zurück| F
+```
+
 ## Features
 
 - Einlernen von Musikstücken durch Hochladen von Wav-Dateien.
