@@ -20,24 +20,12 @@ recognize_instance = RecognizeSong(db_manager)
 history_manager= HistoryManager('database.json')
 
 def identify_music(uploaded_file):
-    st.audio(uploaded_file)
-
     sample_fingerprints = fingerprint_instance.fingerprint_file(uploaded_file)
     matches = recognize_instance.get_matches(sample_fingerprints)
-
     best_match_result = recognize_instance.best_match(matches)
-
     if best_match_result:
-        song_id = str(best_match_result)
-        title = db_manager.get_title_from_song_id(song_id)
-        if title:
-            st.write("Musikstück:", title)
-            history_manager.add_to_history(song_id, title)
-        else:
-            st.warning("Titel nicht gefunden für Song ID: " + str(song_id))
-    else:
-        st.warning("Kein übereinstimmendes Musikstück gefunden.")
-    
+        return db_manager.get_title_from_song_id(str(best_match_result)).split(".")[0]
+    return None
 
 def main():
     st.title("HarmonyHunter")
@@ -92,28 +80,28 @@ def main():
                         st.warning("Albumcover nicht gefunden.")
 
                 with col2:
-                    st.write(title)
+                    st.write(title.split(".")[0])  # Anpassung hier
 
                 with col3:
                     # YouTube-Link
                     youtube_link = get_youtube_link(title)
+                    apple_music_link = get_apple_music_link(title)
+                    spotify_link = get_spotify_link(title)
+
                     if youtube_link:
                         st.markdown(f"[YouTube]({youtube_link})")
+                    else:
+                        st.warning("YouTube-Link nicht gefunden.")
 
-                    # Apple Music-Link
-                    apple_music_link = get_apple_music_link(title)
                     if apple_music_link:
                         st.markdown(f"[Apple Music]({apple_music_link})")
+                    else:
+                        st.warning("Apple Music-Link nicht gefunden.")
 
-                    # Spotify-Link
-                    spotify_link = get_spotify_link(title)
                     if spotify_link:
                         st.markdown(f"[Spotify]({spotify_link})")
-
-                    if not youtube_link and not spotify_link and not apple_music_link:
-                        st.warning("Keine Links gefunden.")
-            else:
-                st.warning("Kein übereinstimmendes Musikstück gefunden.")
+                    else:
+                        st.warning("Spotify-Link nicht gefunden.")
 
         st.subheader("Wähle eine Wav-Datei zum Identifizieren aus")
 
@@ -125,42 +113,39 @@ def main():
             # Wenn ein Titel identifiziert wurde
             if title:
                 col1, col2, col3 = st.columns([1,3,1])
-
                 with col1:
                     # Albumcover ausgeben
                     cover_url = get_album_cover(title)
                     if cover_url:
-                        st.image(cover_url, caption='Albumcover', width=100)
+                        st.image(cover_url, width=100)
                     else:
                         st.warning("Albumcover nicht gefunden.")
-
                 with col2:
-                    st.write(title)
-
+                    st.write(f"Titel: {title.split('.')[0]}")
                 with col3:
                     # YouTube-Link
                     youtube_link = get_youtube_link(title)
+                    apple_music_link = get_apple_music_link(title)
+                    spotify_link = get_spotify_link(title)
+
                     if youtube_link:
                         st.markdown(f"[YouTube]({youtube_link})")
+                    else:
+                        st.warning("YouTube-Link nicht gefunden.")
 
-                    # Apple Music-Link
-                    apple_music_link = get_apple_music_link(title)
                     if apple_music_link:
                         st.markdown(f"[Apple Music]({apple_music_link})")
+                    else:
+                        st.warning("Apple Music-Link nicht gefunden.")
 
-                    # Spotify-Link
-                    spotify_link = get_spotify_link(title)
                     if spotify_link:
                         st.markdown(f"[Spotify]({spotify_link})")
-
-                    if not youtube_link and not spotify_link and not apple_music_link:
-                        st.warning("Keine Links gefunden.")
-            else:
-                st.warning("Kein übereinstimmendes Musikstück gefunden.")
+                    else:
+                        st.warning("Spotify-Link nicht gefunden.")
 
     elif selected == "Historie":
         st.subheader("Historie der erkannten Musikstücke")
-        history = history_manager.get_history()
+        history = history_manager.get_history()[::-1]  # Umkehrung der Reihenfolge für die neuesten Einträge zuerst
         for song in history:
             col1, col2, col3 = st.columns([1,3,1])
 
@@ -173,26 +158,29 @@ def main():
                     st.warning("Albumcover nicht gefunden.")
 
             with col2:
-                st.write(f"Titel: {song['title']}")
-                st.write(f"Datum \\& Zeit: {song['time']}")
+                st.write(f"Titel: {song['title'].split('.')[0]}")  # Anpassung hier
+                st.write(f"Datum & Zeit: {song['time']}")
 
             with col3:
                 # YouTube-Link
                 youtube_link = get_youtube_link(song['title'])
+                apple_music_link = get_apple_music_link(song['title'])
+                spotify_link = get_spotify_link(song['title'])
+
+                links_found = False
                 if youtube_link:
                     st.markdown(f"[YouTube]({youtube_link})")
+                    links_found = True
 
-                # Apple Music-Link
-                apple_music_link = get_apple_music_link(song['title'])
                 if apple_music_link:
                     st.markdown(f"[Apple Music]({apple_music_link})")
+                    links_found = True
 
-                # Spotify-Link
-                spotify_link = get_spotify_link(song['title'])
                 if spotify_link:
                     st.markdown(f"[Spotify]({spotify_link})")
+                    links_found = True
 
-                if not youtube_link and not spotify_link and not apple_music_link:
+                if not links_found:
                     st.warning("Keine Links gefunden.")
 
 if __name__ == "__main__":
