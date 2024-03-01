@@ -1,6 +1,5 @@
 # HarmonyHunter
 
-![HarmonyHunter Logo](link_zum_logo.png)
 
 HarmonyHunter ist eine Anwendung zum Einlernen und Identifizieren von Musikstücken. Die Anwendung ermöglicht es Benutzern, Wav-Dateien hochzuladen, um sie zu einem Musikerkennungssystem hinzuzufügen oder sie aufgenommene Musikstücke identifizieren zu lassen. Die Anwendung bietet auch eine Historie-Funktion, um alle identifizierten Musikstücke anzuzeigen.
 
@@ -55,8 +54,8 @@ Um HarmonyHunter lokal auszuführen, führen Sie die folgenden Schritte aus:
 
 ## Beitragende
 
-- Nora Neumair (noran711)
-- Julian Raab (JulianRaabMCI)
+- Nora Neumair (@noran711)
+- Julian Raab (@JulianRaabMCI)
 - Lenard Wild (@wildle)
 
 Bitte beachten Sie, dass dieses Projekt für Bildungszwecke gedacht ist und noch nicht für den Produktiveinsatz geeignet ist.
