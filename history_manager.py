@@ -2,7 +2,7 @@ from datetime import datetime
 from tinydb import TinyDB, Query
 
 class HistoryManager:
-    def __init__(self, db_path='database.json'):
+    def __init__(self, db_path='history.json'):
         self.db = TinyDB(db_path)
         self.history_table = self.db.table('history')
 

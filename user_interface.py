@@ -12,20 +12,14 @@ from youtube_link import get_youtube_link
 from apple_music_link import get_apple_music_link
 from spotify_link import get_spotify_link
 from history_manager import HistoryManager
+from music_identifier import identify_music
+import os
 
 db = TinyDB('database.json')
 db_manager = DatabaseManager('database.json')
 fingerprint_instance = Fingerprint()
 recognize_instance = RecognizeSong(db_manager)
-history_manager= HistoryManager('database.json')
-
-def identify_music(uploaded_file):
-    sample_fingerprints = fingerprint_instance.fingerprint_file(uploaded_file)
-    matches = recognize_instance.get_matches(sample_fingerprints)
-    best_match_result = recognize_instance.best_match(matches)
-    if best_match_result:
-        return db_manager.get_title_from_song_id(str(best_match_result)).split(".")[0]
-    return None
+history_manager = HistoryManager('database.json')
 
 def main():
     st.title("HarmonyHunter")
@@ -53,6 +47,7 @@ def main():
 
 
     elif selected == "Musikstück identifizieren":
+        title = None  # Initialisierung von 'title'
         if st.button("Aufnahme starten"):
             st.write("Aufnahme gestartet...")
             record_audio('output.wav', duration=5)
@@ -80,7 +75,8 @@ def main():
                         st.warning("Albumcover nicht gefunden.")
 
                 with col2:
-                    st.write(title.split(".")[0])  # Anpassung hier
+                    base_name, extension = os.path.splitext(title)
+                    st.write(base_name)
 
                 with col3:
                     # YouTube-Link
@@ -108,9 +104,13 @@ def main():
         uploaded_file_identify = st.file_uploader("Wav-Datei hochladen", type=["wav"], key="unique_key")
 
         if uploaded_file_identify is not None:
-            title = identify_music(uploaded_file_identify)
+            # Eindeutiger Schlüssel für den Button basierend auf der Datei hochladen
+            button_key = f"button_{uploaded_file_identify.name}"
+            if st.button("Musikstück erkennen", key=button_key):
+                title = identify_music(uploaded_file_identify)
+        
+            st.divider()
 
-            # Wenn ein Titel identifiziert wurde
             if title:
                 col1, col2, col3 = st.columns([1,3,1])
                 with col1:
@@ -121,7 +121,8 @@ def main():
                     else:
                         st.warning("Albumcover nicht gefunden.")
                 with col2:
-                    st.write(f"Titel: {title.split('.')[0]}")
+                    base_name, extension = os.path.splitext(title)
+                    st.write(f"Titel: {base_name}")
                 with col3:
                     # YouTube-Link
                     youtube_link = get_youtube_link(title)
@@ -143,6 +144,7 @@ def main():
                     else:
                         st.warning("Spotify-Link nicht gefunden.")
 
+
     elif selected == "Historie":
         st.subheader("Historie der erkannten Musikstücke")
         history = history_manager.get_history()[::-1]  # Umkehrung der Reihenfolge für die neuesten Einträge zuerst
@@ -158,7 +160,8 @@ def main():
                     st.warning("Albumcover nicht gefunden.")
 
             with col2:
-                st.write(f"Titel: {song['title'].split('.')[0]}")  # Anpassung hier
+                base_name, extension = os.path.splitext(song['title'])
+                st.write(f"Titel: {base_name}")  # Anpassung hier
                 st.write(f"Datum & Zeit: {song['time']}")
 
             with col3:
