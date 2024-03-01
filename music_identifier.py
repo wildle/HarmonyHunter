@@ -7,7 +7,7 @@ from history_manager import HistoryManager
 db_manager = DatabaseManager('database.json')
 fingerprint_instance = Fingerprint()
 recognize_instance = RecognizeSong(db_manager)
-history_manager = HistoryManager('history.json')  # Instanzierung der HistoryManager-Klasse
+history_manager = HistoryManager('database.json')  # Instanzierung der HistoryManager-Klasse
 
 def identify_music(uploaded_file):
     sample_fingerprints = fingerprint_instance.fingerprint_file(uploaded_file)
