@@ -1,10 +1,12 @@
 from fingerprints import Fingerprint
 from recognise import RecognizeSong
 from storage import DatabaseManager
+from history_manager import HistoryManager
 
 def identify_recorded_music(uploaded_file):
     # Erzeuge Instanzen der benötigten Klassen
     db_manager = DatabaseManager('database.json')
+    history_manager = HistoryManager('database.json')
     fingerprint_instance = Fingerprint()
     recognize_instance = RecognizeSong(db_manager)
 
@@ -22,6 +24,7 @@ def identify_recorded_music(uploaded_file):
         song_id = str(best_match_result)
         title = db_manager.get_title_from_song_id(song_id)
         if title:
+            history_manager.add_to_history(song_id, title)
             return title
         else:
             return "Titel nicht gefunden für Song ID: " + str(song_id)
