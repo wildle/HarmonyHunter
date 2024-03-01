@@ -1,62 +1,65 @@
 # HarmonyHunter
 
-![HarmonyHunter Logo](link_zum_logo.png)
-
-HarmonyHunter ist eine Anwendung zum Einlernen und Identifizieren von Musikstücken. Die Anwendung ermöglicht es Benutzern, Wav-Dateien hochzuladen, um sie zu einem Musikerkennungssystem hinzuzufügen oder sie aufgenommene Musikstücke identifizieren zu lassen. Die Anwendung bietet auch eine Historie-Funktion, um alle identifizierten Musikstücke anzuzeigen.
-
-## Installation
-
-Um HarmonyHunter lokal auszuführen, führen Sie die folgenden Schritte aus:
-
-1. *Klonen Sie das Repository auf Ihren lokalen Computer:*
-
-    bash
-    git clone https://github.com/username/HarmonyHunter.git
-    
-
-2. *Wechseln Sie in das Verzeichnis des Repositorys:*
-
-    bash
-    cd HarmonyHunter
-    
-
-3. *Installieren Sie die erforderlichen Python-Abhängigkeiten:*
-
-    bash
-    pip install -r requirements.txt
-    
-
-4. *Führen Sie die Anwendung aus:*
-
-    bash
-    streamlit run user_interface.py
-    
+HarmonyHunter is a music recognition system built with Python. It uses audio fingerprinting techniques to identify music from audio files.
 
 ## Features
 
-- Einlernen von Musikstücken durch Hochladen von Wav-Dateien.
-- Identifizieren von Musikstücken durch Aufnahme oder Hochladen von Wav-Dateien.
-- Anzeige der Historie aller identifizierten Musikstücke.
-- Bereitstellung von Links zu YouTube, Apple Music und Spotify für identifizierte Musikstücke.
+HarmonyHunter bietet eine Vielzahl von Funktionen für die Musikerkennung:
 
-## Umgesetzte Erweiterungen
+- **Audio-Fingerprinting und Speicherung**: HarmonyHunter kann Audio-Fingerprints aus .wav-Dateien erstellen und diese in einer Datenbank speichern.
+- **Musikererkennung aus Audiodateien**: Durch Vergleich der Audio-Fingerprints kann HarmonyHunter Musikstücke aus .wav-Dateien erkennen.
+- **Interaktive Benutzeroberfläche**: Mit der interaktiven Benutzeroberfläche können Benutzer neue Musikstücke einlernen oder vorhandene Musikstücke identifizieren.
+- **Audioaufnahmefunktion**: Benutzer können Audio direkt über das Mikrofon aufnehmen und HarmonyHunter kann dieses Audio identifizieren.
+- **Albumcover-Erkennung**: HarmonyHunter kann das Albumcover des erkannten Musikstücks ermitteln und anzeigen.
+- **Benchmarking**: Die Anwendung bietet Informationen darüber, wie lange der Einlernprozess und die Identifizierung dauern.
+- **YouTube-Link**: HarmonyHunter kann einen Link zum erkannten Musikstück auf YouTube finden.
+- **Verlauf der zuletzt identifizierten Musikstücke**: Die Anwendung kann einen Verlauf der zuletzt identifizierten Musikstücke anzeigen.
 
-- Integration von externen APIs zur Bereitstellung von Albumcovern und Musiklinks.
-- Implementierung einer HistoryManager-Klasse zur Verwaltung der Historie.
-- Hinzufügen von Funktionen zur Identifizierung von Musik über aufgenommene Audiodateien.
-- Verwendung von TinyDB für die Speicherung von Daten.
-- Implementierung von Registrierung und Login.
+## Dependencies
 
-## Verwendete Quellen
+The project depends on several Python libraries. You can install these dependencies using pip:
 
-- [Streamlit Dokumentation](https://docs.streamlit.io/)
-- [TinyDB Dokumentation](https://tinydb.readthedocs.io/en/latest/)
-- [Python Documentation](https://docs.python.org/3/)
+```bash
+pip install -r requirements.txt
 
-## Beitragende
+## Usage
 
-- Nora Neumair (noran711)
-- Julian Raab (JulianRaabMCI)
-- Lenard Wild (@wildle)
+The application provides an interactive user interface for learning and identifying music pieces. You can run the application using the following command:
 
-Bitte beachten Sie, dass dieses Projekt für Bildungszwecke gedacht ist und noch nicht für den Produktiveinsatz geeignet ist.
+streamlit run user_interface.py
+
+In the application, you can choose to either learn a new music piece or identify a music piece.
+
+- To learn a new music piece, select "Musikstück einlernen", upload a .wav file, and the application will fingerprint the audio and store it in the database.
+
+- To identify a music piece, select "Musikstück identifizieren", upload a .wav file, and the application will fingerprint the audio and search the database for a match.
+
+## Project Structure
+
+The project consists of several Python files:
+
+- `settings.py`: Contains global settings for the project.
+- `storage.py`: Defines the `DatabaseManager` class for interacting with the TinyDB database.
+- `user_interface.py`: Contains the Streamlit application for the user interface.
+- `fingerprints.py` : Finds peaks, creates hashes and fingerprints. 
+- `recognize.py` : Finds matches.
+- `audio_recorder.py` : Records audio.
+- `audio_identifier.py` : Identifies audio.
+- `album_cover.py` : Finds album covers with Duckduckgo.
+- `youtube_link.py` : Finds Youtube links with Duckduckgo.
+
+## Add-ons
+- Recording via microphone
+- Determine and display the album cover of the music track
+- Benchmarking the application: How long does the teach-in process take? How long does identification take?
+- Link to identified piece of music on YouTube
+- History of the last identified pieces of music????
+
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+This project is licensed under the terms of the MIT license.
