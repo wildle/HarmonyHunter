@@ -1,13 +1,13 @@
 from fingerprints import Fingerprint
 from recognise import RecognizeSong
 from storage import DatabaseManager
-from history_manager import HistoryManager  # Import der HistoryManager-Klasse
+from history_manager import HistoryManager
 
 # Hier die Klasseninstanzen initialisieren
 db_manager = DatabaseManager('database.json')
 fingerprint_instance = Fingerprint()
 recognize_instance = RecognizeSong(db_manager)
-history_manager = HistoryManager('database.json')  # Instanzierung der HistoryManager-Klasse
+history_manager = HistoryManager('history.json')  # Instanzierung der HistoryManager-Klasse
 
 def identify_music(uploaded_file):
     sample_fingerprints = fingerprint_instance.fingerprint_file(uploaded_file)
@@ -17,8 +17,12 @@ def identify_music(uploaded_file):
         # Holen des Titels des Songs basierend auf der besten Übereinstimmung
         title = db_manager.get_title_from_song_id(str(best_match_result))
         
-        # Hinzufügen des identifizierten Songs zur Historie
-        history_manager.add_to_history(str(best_match_result), title)
-
+        # Überprüfen, ob best_match_result nicht None ist
+        if title:
+            # Hinzufügen des identifizierten Songs zur Historie
+            history_manager.add_to_history(str(best_match_result), title)
+        else:
+            print("Titel nicht gefunden.")
+        
         return title
     return None
