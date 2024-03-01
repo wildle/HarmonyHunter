@@ -29,12 +29,22 @@ Um HarmonyHunter lokal auszuführen, führen Sie die folgenden Schritte aus:
 
     bash
     streamlit run user_interface.py
-    
+   
+## Anwendung
+
+- Anwendung ausführen
+- Registrierung und anschließende Anmeldung
+- Upload der beigefügten Wav-Dateien
+- Abspielen durch Musik-Player
+- Musikstück durch Mikrofon oder Upload identifizieren
+- Links zu verschiedenen Streaming-Anbietern
+- History der erkannten Musikstücke einsehen
 
 ## Features
 
 - Einlernen von Musikstücken durch Hochladen von Wav-Dateien.
 - Identifizieren von Musikstücken durch Aufnahme oder Hochladen von Wav-Dateien.
+- Anzeige des Albumcovers.
 - Anzeige der Historie aller identifizierten Musikstücke.
 - Bereitstellung von Links zu YouTube, Apple Music und Spotify für identifizierte Musikstücke.
 
