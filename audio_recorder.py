@@ -2,6 +2,16 @@ import pyaudio
 import wave
 
 def record_audio(filename, duration=5):
+    """
+    Nimmt Audio für eine bestimmte Dauer auf und speichert es als WAV-Datei.
+
+    Args:
+        filename (str): Der Name der WAV-Datei, in die das aufgenommene Audio gespeichert werden soll.
+        duration (int): Die Dauer der Aufnahme in Sekunden. Standardmäßig 5 Sekunden.
+
+    Returns:
+        None
+    """
     CHUNK = 1024
     FORMAT = pyaudio.paInt16
     CHANNELS = 1

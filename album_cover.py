@@ -1,6 +1,15 @@
 from duckduckgo_search import DDGS
 
 def get_album_cover(title):
+    """
+    Sucht nach dem Albumcover eines Musikalbums basierend auf dem Titel des Albums.
+
+    Args:
+        title (str): Der Titel des Musikalbums.
+
+    Returns:
+        str oder None: Die URL des ersten gefundenen Albumcovers oder None, wenn kein Cover gefunden wurde.
+    """
     # Suchbegriffe für die Albumcover-Suche
     keywords = f"{title} Albumcover"
 

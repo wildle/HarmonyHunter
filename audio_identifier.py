@@ -4,6 +4,15 @@ from storage import DatabaseManager
 from history_manager import HistoryManager
 
 def identify_recorded_music(uploaded_file):
+    """
+    Identifiziert Musik, die aus einer aufgenommenen Audiodatei hochgeladen wurde.
+
+    Args:
+        uploaded_file: Die hochgeladene Audiodatei.
+
+    Returns:
+        str oder None: Der erkannte Titel des Musikstücks oder None, wenn keine Übereinstimmung gefunden wurde.
+    """
     # Erzeuge Instanzen der benötigten Klassen
     db_manager = DatabaseManager('database.json')
     history_manager = HistoryManager('database.json')

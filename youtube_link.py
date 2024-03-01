@@ -2,6 +2,16 @@ import requests
 from bs4 import BeautifulSoup
 
 def get_youtube_link(title):
+    """
+    Sucht nach einem YouTube-Link für das angegebene Musikstücktitel.
+
+    Args:
+        title (str): Der Titel des Musikstücks.
+
+    Returns:
+        str oder None: Der gefunden YouTube-Link oder None, wenn kein Link gefunden wurde.
+    """
+    # Suchbegriffe für die YouTube-Suche erstellen
     keywords = f"{title} YouTube"
 
     # DuckDuckGo-Suchergebnisseite abrufen
@@ -9,7 +19,7 @@ def get_youtube_link(title):
     response = requests.get(url)
 
     if response.status_code == 200:
-        soup = BeautifulSoup(response.text, 'html.parser') #Aufruf HTML Seite
+        soup = BeautifulSoup(response.text, 'html.parser')  # HTML-Seite parsen
 
         # Links auf der Seite finden
         links = soup.find_all('a', href=True)
