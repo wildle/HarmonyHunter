@@ -54,8 +54,8 @@ Um HarmonyHunter lokal auszuführen, führen Sie die folgenden Schritte aus:
 
 ## Beitragende
 
-- Nora Neumair (noran711)
-- Julian Raab (JulianRaabMCI)
+- Nora Neumair (@noran711)
+- Julian Raab (@JulianRaabMCI)
 - Lenard Wild (@wildle)
 
 Bitte beachten Sie, dass dieses Projekt für Bildungszwecke gedacht ist und noch nicht für den Produktiveinsatz geeignet ist.
